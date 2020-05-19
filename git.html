@@ -5,26 +5,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GIT PAGE</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="git.css" />
+    <script src="git.js"></script>
 </head>
 
 <body>
+
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light text-white bg-dark">
+            <a class="navbar-brand" href="#">
+                <img src="GitHub-Mark-32px.png" alt="git-hub" style="width:40px;">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <form class="form-inline my-2 my-lg-0" onsubmit="getrepos() ; return false;">
+                    <input id="User" type="text" class=" text-left" placeholder="Search or jump to.."
+                        style="width: 300px; border:1px solid black; font-size: 20px; font: weight 10px;padding-left: 10px;padding-bottom: 10px;padding-top: 5px; color: black;">
+                    <button type="submit" class="bt-2 " id="search" style="padding: 9px;">Search</button>
+                </form>
+
+            </div>
+        </nav>
+    </div>
     <div class="container">
         <div class="row">
-            <div class="col-lg-12 text-center">
-                <label for="User">Repo Name</label>
-                <input id="User" type="text" class=" text-center"
-                    style="width: 70px; border:1px solid black; font-size: 16px; font-weight: lighter; color: black;">
-                <br>
-                <label for="name">User Name</label>
-                <input id="name" type="text" class=" text-center"
-                    style="width: 70px; border:1px solid black; font-size: 16px; font-weight: lighter; color: black;">
-            </div>
-            <div class="col-lg-12 text-center">
-                <button id="user" onclick="getrepos();">SEARCH </button>
+            <div class="col-lg-12" id="repo">
+                <div class="row mb-3" id="details">
+                    <div class="col-lg-4" id="totalrepo">
+                        <input id="total" type="text" class="mt-2 text-left"
+                            style="width: 200px; border:none; font-size: 16px; font-weight: bolder; color: black;">
+                    </div>
+                    <div class="col-lg-4" id="followedby1">
+                        <!--<input id="followers" type="text" class="mt-2 text-left"
+                            style="width: 200px; border:none; font-size: 16px; font-weight: bolder; color: black;">-->
+                        <div class="dropdown" id="followedby">
+                            <div class="dropdown-menu" aria-labelledby="followers">
+                               <!-- <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4" id="follows">
+                        <input id="followings" type="text" class="mt-2 text-left"
+                            style="width: 200px; border:none; font-size: 16px; font-weight: bolder; color: black;">
+                    </div>
+                    <br>
+                </div>
+                <div class="row mb-3">
+                    <div id="singlerepo" class="col-lg-6">
+
+                    </div>
+                    <div id="totalrepo1" class="col-lg-6">
+
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <script src="git.js"></script>
+
 </body>
 
 </html>
