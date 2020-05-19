@@ -89,7 +89,7 @@ async function getrepos() {
         btn1.innerHTML = "No-of-followers:" + result4.length + "";
         document.getElementById("follows").appendChild(btn1);
         document.getElementById("follows1").appendChild(document.getElementById("follows"))
-        document.getElementById("details").appendChild(document.getElementById("follows1"));
+        document.getElementById("details").appendChild(document.getElementById("follows"));
 
         //to get a particular repo of the user
         let search1 = document.createElement("input");
