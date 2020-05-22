@@ -11,14 +11,14 @@ async function getrepos() {
     let a, b;
     [a, b] = [inp[0], inp[1]];
     let headers = {
-        "Authorization": `Token 3cf1f811afd61a974e52b5f2882ab59e85dbe755`
+        "Authorization": `Token 8a207242200c541be6658b0e0c974ad745c529dc`
     }
     console.log("a", a, "b", b);
 
     //sample git api response
-    let url5="https://api.github.com/"
-    let response5=await fetch(url5);
-    let result5=await response5.json();
+    let url5 = "https://api.github.com/"
+    let response5 = await fetch(url5);
+    let result5 = await response5.json();
     console.log(result5);
 
     //sample response if username is given
@@ -66,7 +66,7 @@ async function getrepos() {
         document.getElementById("totalrepo").appendChild(total_count);
 
         //showing the no of followers for a particuclar user
-        let btn=document.createElement("button");
+        let btn = document.createElement("button");
         btn.setAttribute("class", "btn btn-secondary dropdown-toggle");
         btn.setAttribute("type", "button");
         btn.setAttribute("id", "followers");
@@ -79,7 +79,7 @@ async function getrepos() {
         document.getElementById("details").appendChild(document.getElementById("followedby1"));
 
         //showing the no of followers that a particuclar user follows
-        let btn1=document.createElement("button");
+        let btn1 = document.createElement("button");
         btn1.setAttribute("class", "btn btn-secondary dropdown-toggle");
         btn1.setAttribute("type", "button");
         btn1.setAttribute("id", "followings");
@@ -97,12 +97,16 @@ async function getrepos() {
         search1.setAttribute("style", "width: 300px; border:1px solid black; font-size: 20px; font: weight 10px;padding-left: 10px;padding-bottom: 10px;padding-top: 5px; color: black;");
         search1.setAttribute("type", "text");
         search1.setAttribute("class", "text-left");
+        search1.setAttribute("id", "searchbar")
         document.getElementById("singlerepo").appendChild(search1);
         let inputElement = document.createElement('input');
         inputElement.type = "button";
         inputElement.setAttribute("class", "btn btn-primary");
         inputElement.value = "Search";
-        inputElement.addEventListener('click', async function () {
+        /*let value1=document.getElementById("searchbar").value;
+        console.log(value1,"value");*/
+        inputElement.setAttribute("onclick", "searching()");
+        /*inputElement.addEventListener('click', async function () {
             let url1 = `https://api.github.com/search/repositories?q=${search1.value}+in:file+user:${a}`;
             let response1 = await fetch(url1, {
                 "method": "GET",
@@ -118,7 +122,7 @@ async function getrepos() {
             link1.innerHTML = `${result1["items"]["" + 0 + ""]["full_name"]}`;
             div1.appendChild(link1);
             document.getElementById("repo").appendChild(div1);
-        });
+        });*/
         document.getElementById("singlerepo").appendChild(inputElement);
 
         //to get all the repo of the user
@@ -128,12 +132,16 @@ async function getrepos() {
         console.log(total_pages);
 
         for (let i = 1; i <= (total_pages + 1); i++) {
-            let count1 = 0;
             let inputElement = document.createElement('input');
             inputElement.type = "button";
             inputElement.setAttribute("class", "btn btn-primary");
             inputElement.value = "" + i + "";
-            inputElement.addEventListener('click', function () {
+            inputElement.setAttribute("onclick", "pagination(" + i + ", "+total_pages+")");
+            /*inputElement.addEventListener('click', function () {
+                let div2 = document.createElement("div");
+                div2.setAttribute("class", "row mb-3");
+                div2.setAttribute("id", "repositories");
+                document.getElementById("repo").appendChild(div2);
                 if (i != 1) {
                     i = (i - 1) * 10;
                     i++;
@@ -145,19 +153,16 @@ async function getrepos() {
                 for (let j = 0, k = i - 1; j < count; k++, count--) {
                     count1++;
                     let div1 = document.createElement("div");
-                    div1.setAttribute("class", "pt-2");
+                    div1.setAttribute("class", "col-lg-12 pt-2");
                     let link1 = document.createElement("a");
                     console.log("url", result1[k]["html_url"]);
                     link1.setAttribute("href", "" + result1["" + k + ""]["html_url"] + "");
                     link1.innerHTML = `${result1["" + k + ""]["full_name"]}`;
                     div1.appendChild(link1);
-                    document.getElementById("repo").appendChild(div1);
+                    document.getElementById("repositories").appendChild(div1);
                 }
-            });
+            });*/
             document.getElementById("totalrepo1").appendChild(inputElement);
-            if (count1 === 1) {
-                inputElement.disabled = true;
-            }
         }
     }
     else {
@@ -176,12 +181,12 @@ async function getrepos() {
         let total = Object.keys(result1["items"]).length;
         let total_pages = total / 10;
         for (let i = 1; i <= total_pages; i++) {
-            let count1 = 0;
             let inputElement = document.createElement('input');
             inputElement.type = "button";
             inputElement.setAttribute("class", "btn btn-primary");
             inputElement.value = "" + i + "";
-            inputElement.addEventListener('click', function () {
+            inputElement.setAttribute("onclick", "repositories( " + i + ", "+total_pages+")");
+            /*inputElement.addEventListener('click', function () {
                 if (i != 1) {
                     i = (i - 1) * 10;
                     i++;
@@ -199,11 +204,137 @@ async function getrepos() {
                     document.getElementById("repo").appendChild(div1);
                 }
             });
-            document.getElementById("totalrepo1").appendChild(inputElement);
+            document.getElementById("repositories").appendChild(inputElement);
             if (count1 === 1) {
                 inputElement.disabled = true;
-            }
+            }*/
         }
 
+    }
+}
+
+
+async function searching() {
+    let inp = document.getElementById("User").value;
+    inp = inp.split(" ");
+    let name, b;
+    [name, b] = [inp[0], inp[1]];
+    let value=document.getElementById("searchbar").value;
+    let div2 = document.createElement("div");
+    div2.setAttribute("class", "row mb-3");
+    div2.setAttribute("id", "repositories");
+    document.getElementById("repo").appendChild(div2);
+    let headers = {
+        "Authorization": `Token 8a207242200c541be6658b0e0c974ad745c529dc`
+    }
+    let url1 = `https://api.github.com/search/repositories?q=${value}+in:file+user:${name}`;
+    let response1 = await fetch(url1, {
+        "method": "GET",
+        "headers": headers
+    });
+    let result1 = await response1.json();
+    console.log(result1);
+    let div1 = document.createElement("div");
+    div1.setAttribute("class", "pt-2");
+    div1.innerHTML="";
+    let link1 = document.createElement("a");
+    console.log("url", result1["items"][0]["html_url"]);
+    link1.setAttribute("href", "" + result1["items"]["" + 0 + ""]["html_url"] + "");
+    link1.innerHTML = `${result1["items"]["" + 0 + ""]["full_name"]}`;
+    div1.appendChild(link1);
+    document.getElementById("repositories").appendChild(div1);
+}
+
+async function pagination(number, pages) {
+    let inp = document.getElementById("User").value;
+    inp = inp.split(" ");
+    let name, b;
+    [name, b] = [inp[0], inp[1]];
+    let i=number;
+    console.log("i", i);
+    let total_pages=pages;
+    console.log("total_pages", total_pages);
+    //getting the users
+    let url2 = `https://api.github.com/users/${name}/repos`;
+    let headers = {
+        "Authorization": `Token 8a207242200c541be6658b0e0c974ad745c529dc`
+    }
+    let response2 = await fetch(url2, {
+        "method": "GET",
+        "headers": headers
+    });
+    let result2 = await response2.json();
+    console.log("result2", result2);
+    
+    let div2 = document.createElement("div");
+    div2.setAttribute("class", "row mb-3");
+    div2.setAttribute("id", "repositories");
+    div2.innerHTML="";
+    document.getElementById("repo").appendChild(div2);
+    if (i != 1) {
+        i = (i - 1) * 10;
+        i++;
+    }
+    let count = 10;
+    if (i == total_pages) {
+        let count = parseInt(total % 10);
+    }
+    for (let j = 0, k = i - 1; j < count; k++, count--) {
+        console.log("k", k);
+        let link=result2[""+k+""]["html_url"];
+        console.log(link);
+        let div1 = document.createElement("div");
+        div1.setAttribute("class", "col-lg-12 pt-2");
+        div2.innerHTML="";
+        let link1 = document.createElement("a");
+        //console.log("url", result2.k.html_url);
+        link1.setAttribute("href", link);
+        link1.innerHTML = `${result2["" + k + ""]["full_name"]}`;
+        div1.appendChild(link1);
+        document.getElementById("repositories").appendChild(div1);
+    }
+    
+}
+
+async function repositories(number, pages){
+    let inp = document.getElementById("User").value;
+    inp = inp.split(" ");
+    let name, b;
+    [name, b] = [inp[0], inp[1]];
+    let i=number;
+    let total_pages=pages;
+    let url3 = `https://api.github.com/search/repositories?q=${name}+in:file`;
+    let headers = {
+        "Authorization": `Token 8a207242200c541be6658b0e0c974ad745c529dc`
+    }
+    let response2 = await fetch(url3, {
+        "method": "GET",
+        "headers": headers
+    });
+    let result2 = await response2.json();
+    console.log(result2);
+    let div2 = document.createElement("div");
+    div2.setAttribute("class", "row mb-3");
+    div2.setAttribute("id", "repositories");
+    div2.innerHTML="";
+    document.getElementById("repo").appendChild(div2);
+    if (i != 1) {
+        i = (i - 1) * 10;
+        i++;
+    }
+    let count = 10;
+    if (i == total_pages) {
+        let count = parseInt(total % 10);
+    }
+    for (let j = 0, k = i - 1; j < count; k++, count--) {
+        count1++;
+        let div1 = document.createElement("div");
+        div1.setAttribute("class", "col-lg-12 pt-2");
+        let link1 = document.createElement("a");
+        console.log("url", result1[k][html_url]);
+        link1.setAttribute("href", "" + result1[""+k+""][""+html_url+""] + "");
+        link1.innerHTML = `${result1["" + k + ""]["full_name"]}`;
+        div1.appendChild(link1);
+        document.getElementById("repositories").appendChild(div1);
     }
 }
