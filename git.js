@@ -11,7 +11,7 @@ async function getrepos() {
     let a, b;
     [a, b] = [inp[0], inp[1]];
     let headers = {
-        "Authorization": `Token 8a207242200c541be6658b0e0c974ad745c529dc`
+        "Authorization": `Token 74ccd1bd25d8aa5aaea28e5dd7603dd45bc3fb37`
     }
     console.log("a", a, "b", b);
 
@@ -225,7 +225,7 @@ async function searching() {
     div2.setAttribute("id", "repositories");
     document.getElementById("repo").appendChild(div2);
     let headers = {
-        "Authorization": `Token 8a207242200c541be6658b0e0c974ad745c529dc`
+        "Authorization": `Token 74ccd1bd25d8aa5aaea28e5dd7603dd45bc3fb37`
     }
     let url1 = `https://api.github.com/search/repositories?q=${value}+in:file+user:${name}`;
     let response1 = await fetch(url1, {
@@ -257,7 +257,7 @@ async function pagination(number, pages) {
     //getting the users
     let url2 = `https://api.github.com/users/${name}/repos`;
     let headers = {
-        "Authorization": `Token 8a207242200c541be6658b0e0c974ad745c529dc`
+        "Authorization": `Token 74ccd1bd25d8aa5aaea28e5dd7603dd45bc3fb37`
     }
     let response2 = await fetch(url2, {
         "method": "GET",
@@ -305,7 +305,7 @@ async function repositories(number, pages){
     let total_pages=pages;
     let url3 = `https://api.github.com/search/repositories?q=${name}+in:file`;
     let headers = {
-        "Authorization": `Token 8a207242200c541be6658b0e0c974ad745c529dc`
+        "Authorization": `Token 74ccd1bd25d8aa5aaea28e5dd7603dd45bc3fb37`
     }
     let response2 = await fetch(url3, {
         "method": "GET",
